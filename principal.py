@@ -10,20 +10,21 @@ from mtcnn.mtcnn import MTCNN
 import database as db
 
 # -------Configuracion colores y letra-------
-path = "C:/Users/user/facial_recognition/" # your path
+path = os.getcwd() + "/"
+
 txt_login = "Inicio de Sesión"
 txt_register = "Cual sera tu eleccion"
 
 color_white = "#f4f5f4"
 color_black = "#101010"
 color_green = "#42FF00"
-color_grey_transparent = 'grey'
+#color_grey_transparent = 'grey'
 
 color_black_btn = "#202020"
 color_background = "#ADA7A7"
 
 font_label = "Calibri"
-size_screen = "800x500"
+size_screen = "1000x1000"
 
 # colors
 color_success = "\033[1;32;40m"
@@ -102,6 +103,7 @@ def register_face_db(img):
     res_bd = db.registerUser(name_user, path + img)
 
     getEnter(screen1)
+    
     if(res_bd["affected"]):
         printAndShow(screen1, "¡Éxito! Ha sido registrado correctamente", 1)
     else:
@@ -180,7 +182,7 @@ def login_capture():
 
     face(img, faces)
     getEnter(screen2)
-
+    
     res_db = db.getUser(user_login, path + img_user)
     if(res_db["affected"]):
         my_files = os.listdir()
@@ -189,13 +191,14 @@ def login_capture():
             face_log = cv2.imread(img, 0)
 
             comp = compatibility(face_reg, face_log)
-            
+            compatibilidad = "{}Compatibilidad del {:.1%}{}".format(color_error, float(comp), color_normal)
+            porcentaje = float(comp) * 100
             if comp >= 0.94:
-                print("{}Compatibilidad del {:.1%}{}".format(color_success, float(comp), color_normal))
+                print(compatibilidad)
                 printAndShow(screen2, f"Bienvenido, {user_login}", 1)
             else:
-                print("{}Compatibilidad del {:.1%}{}".format(color_error, float(comp), color_normal))
-                printAndShow(screen2, "¡Error! Incopatibilidad de datos", 0)
+                print(compatibilidad)
+                printAndShow(screen2, f"¡Error! Incompatibilidad de datos {porcentaje}%", 0)
             os.remove(img_user)
     
         else:
@@ -223,10 +226,12 @@ root = Tk()
 root.geometry(size_screen)
 root.title("AVM")
 root.configure(bg=color_background)
+
 #Asignar un color al fondo de root (De preferencia un color que no utilices)
-root['bg'] = color_grey_transparent
+#root['bg'] = color_grey_transparent
+
 #Configurar el color que va a ser transparente, debe ser el mismo que el color del fondo de root
-root.attributes('-transparentcolor', color_grey_transparent)
+#root.attributes('-transparentcolor', color_grey_transparent)
 
 # Obtener la ruta absoluta de la imagen
 image_home = os.path.join(os.getcwd(), "img", "idea2.png")
@@ -245,7 +250,7 @@ bg_label.place(relwidth=1, relheight=1)
 
 #Mensaje de bienvenida
 Label(text="¡Bienvenido!", fg=color_white, bg=color_black, font=(font_label, 20), width="500", height="2").pack()
-Label(text="¿Seras digno del ingreso?", fg=color_white, bg=color_grey_transparent, font=(font_label, 20), width="500", height="2").pack()
+Label(text="¿Seras digno del ingreso?", fg=color_white, bg=color_black, font=(font_label, 20), width="500", height="2").pack() #bg=color_grey_transparent,
 
 #Botones de ingreso y registro
 getEnter(root)

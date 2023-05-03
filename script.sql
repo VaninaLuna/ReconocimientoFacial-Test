@@ -1,6 +1,6 @@
-CREATE DATABASE agency;
+CREATE DATABASE registroFacial;
 
-USE agency;
+USE registroFacial;
 
 CREATE TABLE user(
  idUser INT AUTO_INCREMENT,
