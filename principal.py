@@ -1,3 +1,6 @@
+
+#-------Importar librerias -------
+
 from tkinter import *
 from tkinter import messagebox as msg
 import os
@@ -6,7 +9,7 @@ from matplotlib import pyplot as plt
 from mtcnn.mtcnn import MTCNN
 import database as db
 
-# CONFIG
+# -------Configuracion colores y letra-------
 path = "C:/Users/user/facial_recognition/" # your path
 txt_login = "Inicio de Sesión"
 txt_register = "Cual sera tu eleccion"
@@ -68,7 +71,7 @@ def credentials(screen, var, flag):
     frame.pack()
     
     if flag:
-        Button(frame, text="Permitir acceso", fg=color_white, bg=color_black_btn, activebackground=color_background, borderwidth=0, font=(font_label, 14), height="2", width="40", command=login_capture).grid(row=0, column=0, padx=5, pady=5, sticky="nsew")        
+        Button(frame, text="Permitir acceso",fg=color_white, bg=color_black_btn, borderwidth=10, font=(font_label, 14), height="2", width="40", command=login_capture).grid(row=20, column=0, padx=0, pady=0, sticky="nsew")        
     else:
         #screen = root
         #screen.grid()
@@ -76,9 +79,10 @@ def credentials(screen, var, flag):
         #screen.rowconfigure(1, weight=1)
         #screen.columnconfigure(0, weight=1)
         #screen.columnconfigure(1, weight=1)
-        Button(frame, text="Lado Oscuro", fg=color_white, bg=color_black_btn, font=(font_label, 14), height="2", width="40", command=register_capture).grid(row=1, column=0, padx=3, pady=5, sticky="nsew")
+        Button(frame, text="Lado Oscuro", fg=color_white, bg=color_black, borderwidth=10,font=(font_label, 14), height="2", width="40", command=register_capture).grid(row=5, column=0, padx=0, pady=0, sticky="nsew")
 
-        Button(frame, text="Lado Luminoso", fg=color_white, bg=color_black_btn, activebackground=color_background, highlightthickness=0, font=(font_label, 14), height="2", width="40", command=register_capture).grid(row=1, column=1, padx=10, pady=5, sticky="nsew")
+        Button(frame, text="Lado Luminoso", fg=color_black, bg=color_white, borderwidth=10, font=(font_label, 14), height="2", width="40", command=register_capture).grid(row=5, column=1, padx=0, pady=0, sticky="nsew")
+        
     return entry
 
 def face(img, faces):
@@ -99,9 +103,9 @@ def register_face_db(img):
 
     getEnter(screen1)
     if(res_bd["affected"]):
-        printAndShow(screen1, "¡Éxito! Se ha registrado correctamente", 1)
+        printAndShow(screen1, "¡Éxito! Ha sido registrado correctamente", 1)
     else:
-        printAndShow(screen1, "¡Error! No se ha registrado correctamente", 0)
+        printAndShow(screen1, "¡Error! No ha sido registrado correctamente", 0)
     os.remove(img)
 
 def register_capture():
@@ -239,10 +243,11 @@ bg_label = Label(root, image=bg_image_home)
 bg_label.place(relwidth=1, relheight=1)
 # bg_label.pack(fill="both", expand=True)
 
-
+#Mensaje de bienvenida
 Label(text="¡Bienvenido!", fg=color_white, bg=color_black, font=(font_label, 20), width="500", height="2").pack()
-Label(text="¿Seras digno del ingreso?", fg=color_white, bg=color_black, font=(font_label, 20), width="500", height="2").pack()
+Label(text="¿Seras digno del ingreso?", fg=color_white, bg=color_grey_transparent, font=(font_label, 20), width="500", height="2").pack()
 
+#Botones de ingreso y registro
 getEnter(root)
 Button(text=txt_login, fg=color_white, bg=color_black_btn, activebackground=color_background, borderwidth=0, font=(font_label, 14), height="2", width="40", command=login).pack()
 
